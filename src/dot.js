@@ -1,4 +1,4 @@
-import { Graphviz } from "@hpcc-js/wasm/graphviz";
+import { Graphviz } from "@hpcc-js/wasm";
 import * as d3 from "d3-selection";
 import { extractAllElementsData, extractElementData, createElementWithAttributes } from "./element.js";
 import { convertToPathData } from "./svg.js";

@@ -49,7 +49,7 @@ import { drawnNodeSelection } from "./drawNode.js";
 import { workerCode } from "./workerCode.js";
 import { sharedWorkerCode } from "./workerCode.js";
 import { workerCodeBody } from "./workerCode.js";
-import { Graphviz as hpccWasmGraphviz } from "@hpcc-js/wasm/graphviz";
+import { Graphviz as hpccWasmGraphviz } from "@hpcc-js/wasm";
 
 export function Graphviz(selection, options) {
     this._options = {
