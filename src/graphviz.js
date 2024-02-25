@@ -1,14 +1,14 @@
 import * as d3 from "d3-selection";
-import {dispatch} from "d3-dispatch";
+import { dispatch } from "d3-dispatch";
 import render from "./render.js";
 import graphvizVersion from "./graphvizVersion.js";
-import {layout} from "./dot.js";
+import { layout } from "./dot.js";
 import dot from "./dot.js";
 import data from "./data.js";
-import {initViz} from "./dot.js";
+import { initViz } from "./dot.js";
 import renderDot from "./renderDot.js";
 import transition from "./transition.js";
-import {active} from "./transition.js";
+import { active } from "./transition.js";
 import options from "./options.js";
 import width from "./width.js";
 import height from "./height.js";
@@ -25,31 +25,31 @@ import convertEqualSidedPolygons from "./convertEqualSidedPolygons.js";
 import tweenPrecision from "./tweenPrecision.js";
 import growEnteringEdges from "./growEnteringEdges.js";
 import zoom from "./zoom.js";
-import {resetZoom} from "./zoom.js";
-import {zoomBehavior} from "./zoom.js";
-import {zoomSelection} from "./zoom.js";
-import {zoomScaleExtent} from "./zoom.js";
-import {zoomTranslateExtent} from "./zoom.js";
+import { resetZoom } from "./zoom.js";
+import { zoomBehavior } from "./zoom.js";
+import { zoomSelection } from "./zoom.js";
+import { zoomScaleExtent } from "./zoom.js";
+import { zoomTranslateExtent } from "./zoom.js";
 import on from "./on.js";
 import onerror from "./onerror.js";
 import logEvents from "./logEvents.js";
 import destroy from "./destroy.js";
-import {drawEdge} from "./drawEdge.js";
-import {updateDrawnEdge} from "./drawEdge.js";
-import {moveDrawnEdgeEndPoint} from "./drawEdge.js";
-import {insertDrawnEdge} from "./drawEdge.js";
-import {removeDrawnEdge} from "./drawEdge.js";
-import {drawnEdgeSelection} from "./drawEdge.js";
-import {drawNode} from "./drawNode.js";
-import {updateDrawnNode} from "./drawNode.js";
-import {moveDrawnNode} from "./drawNode.js";
-import {insertDrawnNode} from "./drawNode.js";
-import {removeDrawnNode} from "./drawNode.js";
-import {drawnNodeSelection} from "./drawNode.js";
-import {workerCode} from "./workerCode.js";
-import {sharedWorkerCode} from "./workerCode.js";
-import {workerCodeBody} from "./workerCode.js";
-import {Graphviz as hpccWasmGraphviz} from "@hpcc-js/wasm/graphviz";
+import { drawEdge } from "./drawEdge.js";
+import { updateDrawnEdge } from "./drawEdge.js";
+import { moveDrawnEdgeEndPoint } from "./drawEdge.js";
+import { insertDrawnEdge } from "./drawEdge.js";
+import { removeDrawnEdge } from "./drawEdge.js";
+import { drawnEdgeSelection } from "./drawEdge.js";
+import { drawNode } from "./drawNode.js";
+import { updateDrawnNode } from "./drawNode.js";
+import { moveDrawnNode } from "./drawNode.js";
+import { insertDrawnNode } from "./drawNode.js";
+import { removeDrawnNode } from "./drawNode.js";
+import { drawnNodeSelection } from "./drawNode.js";
+import { workerCode } from "./workerCode.js";
+import { sharedWorkerCode } from "./workerCode.js";
+import { workerCodeBody } from "./workerCode.js";
+import { Graphviz as hpccWasmGraphviz } from "@hpcc-js/wasm/graphviz";
 
 export function Graphviz(selection, options) {
     this._options = {
@@ -88,7 +88,7 @@ export function Graphviz(selection, options) {
     }
     if (useWorker || useSharedWorker) {
         var scripts = d3.selectAll('script');
-        var vizScript = scripts.filter(function() {
+        var vizScript = scripts.filter(function () {
             return d3.select(this).attr('type') == 'javascript/worker' || (d3.select(this).attr('src') && d3.select(this).attr('src').match(/.*\/@hpcc-js\/wasm/));
         });
         if (vizScript.size() == 0) {

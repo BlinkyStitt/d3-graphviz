@@ -1,10 +1,10 @@
 import { Graphviz } from "@hpcc-js/wasm/graphviz";
 import * as d3 from "d3-selection";
-import {extractAllElementsData, extractElementData, createElementWithAttributes} from "./element.js";
-import {convertToPathData} from "./svg.js";
-import {pathTweenPoints} from "./tweening.js";
-import {isEdgeElement} from "./data.js";
-import {getEdgeTitle} from "./data.js";
+import { extractAllElementsData, extractElementData, createElementWithAttributes } from "./element.js";
+import { convertToPathData } from "./svg.js";
+import { pathTweenPoints } from "./tweening.js";
+import { isEdgeElement } from "./data.js";
+import { getEdgeTitle } from "./data.js";
 
 
 export function initViz() {
@@ -21,10 +21,10 @@ export function initViz() {
                 this._afterInit();
             }
         });
-// after the port to ESM modules, we don't know how to trigger this so
-// we just disable it from coverage
-/* c8 ignore start */
-    } catch(error) {
+        // after the port to ESM modules, we don't know how to trigger this so
+        // we just disable it from coverage
+        /* c8 ignore start */
+    } catch (error) {
         // we end up here when the the script tag type used to load
         // the "@hpcc-js/wasm" script is not "application/javascript"
         // or "text/javascript", but typically "javascript/worker". In
@@ -32,11 +32,11 @@ export function initViz() {
         // unnecessary because it's loaded by the web worker
         // instead. This is expected so we just ignore the error.
     }
-/* c8 ignore stop */
+    /* c8 ignore stop */
     if (this._worker != null) {
         var vizURL = this._vizURL;
         var graphvizInstance = this;
-        this._workerPort.onmessage = function(event) {
+        this._workerPort.onmessage = function (event) {
             var callback = graphvizInstance._workerCallbacks.shift();
             callback.call(graphvizInstance, event);
         }
@@ -44,10 +44,10 @@ export function initViz() {
             // Local URL. Prepend with local domain to be usable in web worker
             vizURL = (new window.URL(vizURL, document.location.href)).href;
         }
-        postMessage.call(this, {type: "layout", dot: "", engine: 'dot', vizURL: vizURL}, function (event) {
+        postMessage.call(this, { type: "layout", dot: "", engine: 'dot', vizURL: vizURL }, function (event) {
             switch (event.data.type) {
-            case "init":
-                break;
+                case "init":
+                    break;
             }
         });
         postMessage.call(this, { type: "version" }, function (event) {
@@ -79,15 +79,15 @@ export function layout(src, engine, vizOptions, callback) {
     } else {
         try {
             var svgDoc = this.layoutSync(src, "svg", engine, vizOptions);
-            callback.call(this, {type: 'done', svg: svgDoc});
+            callback.call(this, { type: 'done', svg: svgDoc });
         }
-        catch(error) {
-            callback.call(this, {type: 'error', error: error.message});
+        catch (error) {
+            callback.call(this, { type: 'error', error: error.message });
         }
     }
 }
 
-export default function(src, callback) {
+export default function (src, callback) {
 
     var graphvizInstance = this;
     var worker = this._worker;
@@ -106,17 +106,17 @@ export default function(src, callback) {
     }
     this.layout(src, engine, vizOptions, function (data) {
         switch (data.type) {
-        case "error":
-            if (graphvizInstance._onerror) {
-                graphvizInstance._onerror(data.error);
-            } else {
-                throw data.error.message
-            }
-            break;
-        case "done":
-            var svgDoc = data.svg;
-            layoutDone.call(this, svgDoc, callback);
-            break;
+            case "error":
+                if (graphvizInstance._onerror) {
+                    graphvizInstance._onerror(data.error);
+                } else {
+                    throw data.error.message
+                }
+                break;
+            case "done":
+                var svgDoc = data.svg;
+                layoutDone.call(this, svgDoc, callback);
+                break;
         }
     });
 
@@ -204,7 +204,7 @@ function layoutDone(svgDoc, callback) {
         }
     }
 
-    function postProcessDataPass1Local(datum, index=0, parentData) {
+    function postProcessDataPass1Local(datum, index = 0, parentData) {
         setKey(datum, index);
         setId(datum, parentData);
         var id = datum.id;
@@ -232,10 +232,10 @@ function layoutDone(svgDoc, callback) {
             if (datum.parent.attributes.class == 'node') {
                 if (tag == 'title') {
                     if (datum.children.length > 0) {
-                      var child = datum.children[0];
-                      var nodeId = child.text;
+                        var child = datum.children[0];
+                        var nodeId = child.text;
                     } else {
-                      var nodeId = '';
+                        var nodeId = '';
                     }
                     nodeDictionary[nodeId] = datum.parent;
                 }
@@ -306,7 +306,7 @@ function layoutDone(svgDoc, callback) {
                                 y: prevStartShape.center.y - startShape.center.y,
                             }
                         } else {
-                            datum.offset = {x: 0, y: 0};
+                            datum.offset = { x: 0, y: 0 };
                         }
                     }
                 }
@@ -331,12 +331,12 @@ function layoutDone(svgDoc, callback) {
     var doc = parser.parseFromString(svgDoc, "image/svg+xml");
 
     newDoc
-        .append(function() {
+        .append(function () {
             return doc.documentElement;
         });
 
     var newSvg = newDoc
-      .select('svg');
+        .select('svg');
 
     var data = extractAllElementsData(newSvg);
     this._dispatch.call('dataExtractEnd', this);
